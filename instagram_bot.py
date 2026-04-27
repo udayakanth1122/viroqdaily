@@ -29,7 +29,7 @@ def generate_instagram_post(niche="High-Protein Indian Meals"):
     """
     
     response = client.models.generate_content(
-        model="gemini-2.0-flash-001", contents=prompt
+        model="gemini-1.5-flash", contents=prompt
     )
     try:
         # Clean up the response text in case Gemini adds markdown code blocks
