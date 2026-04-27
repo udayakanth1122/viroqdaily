@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from google import genai
 import os
 import requests
 import json
@@ -12,8 +12,7 @@ BUFFER_PROFILE_ID = os.environ.get("BUFFER_PROFILE_ID") # The ID of your Instagr
 
 def generate_instagram_post(niche="High-Protein Indian Meals"):
     """Generates a caption and image prompt using Gemini 2.0 Flash."""
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    client = genai.Client(api_key=GEMINI_API_KEY)
     
     prompt = f"""
     Create a highly engaging Instagram post for the brand 'ViroqDaily' about {niche}.
@@ -29,7 +28,9 @@ def generate_instagram_post(niche="High-Protein Indian Meals"):
     Format the output as JSON with keys: 'caption' and 'image_prompt'.
     """
     
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=prompt
+    )
     try:
         # Clean up the response text in case Gemini adds markdown code blocks
         text = response.text.replace('```json', '').replace('```', '').strip()
