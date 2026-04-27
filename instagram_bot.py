@@ -44,7 +44,7 @@ def post_to_buffer(caption, image_url=None):
     url = "https://api.bufferapp.com/1/updates/create.json"
     
     payload = {
-        'profile_ids[]': [BUFFER_PROFILE_ID],
+        'profile_ids': [BUFFER_PROFILE_ID],
         'text': caption,
         'shorten': False,
         'now': True # Set to False if you want it to go into the regular Buffer queue
