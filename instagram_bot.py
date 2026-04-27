@@ -58,8 +58,16 @@ def post_to_buffer(caption, image_url=None):
         'Authorization': f'Bearer {BUFFER_ACCESS_TOKEN}'
     }
 
+    print(f"Pushing to Buffer for profile: {BUFFER_PROFILE_ID}...")
     response = requests.post(url, data=payload, headers=headers)
-    return response.json()
+    print(f"Buffer API Status Code: {response.status_code}")
+    try:
+        result = response.json()
+        print(f"Buffer API Response JSON: {json.dumps(result, indent=2)}")
+        return result
+    except Exception as e:
+        print(f"Failed to parse Buffer response as JSON: {response.text}")
+        return {"error": str(e), "text": response.text}
 
 if __name__ == "__main__":
     if not all([GEMINI_API_KEY, BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID]):
